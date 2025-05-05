@@ -1,0 +1,119 @@
+import { MutableRefObject, useState } from "react";
+import { usePathfinding } from "../hooks/usePathfinding";
+import { useTile } from "../hooks/useTile";
+import { EXTENDED_SLEEP_TIME, MAZES, PathFINDING_ALGORITHMS, SLEEP_TIME, SPEEDS} from "../utils/constants";
+import { resetGrid } from "../utils/resetGrid";
+import { AlgorithmType, MazeType, SpeedType } from "../utils/types";
+import { Select } from "./Select";
+import { runMazeAlgorithm} from "../utils/runMazeAlgorithm";
+import { useSpeed } from "../hooks/useSpeed";
+import { PlayButton } from "./PlayButton";
+import { runPathFindingAlgorithm } from "../utils/runPathFindingAlgorithm";
+import { animatePath } from "../utils/animatePath";
+
+export function Nav({
+    isVisulaizationRunningRef,
+}:{
+        isVisulaizationRunningRef: MutableRefObject<boolean>;
+}) {
+    const [isDisabled, setIsDisabled] = useState(false);
+    const {maze, setMaze, grid, setGrid, isGraphVisualized, setIsGraphVisualized, algorithm, setAlgorithm,} = usePathfinding();
+    const {startTile, endTile} =  useTile();
+    const {speed ,setSpeed} = useSpeed();
+
+    const handleGenerateMaze = (maze: MazeType) => {
+        if(maze === 'NONE'){
+            setMaze(maze);
+            // reset grid
+            resetGrid({grid, startTile, endTile});
+            return;
+        }
+
+        setMaze(maze);
+        setIsDisabled(true);
+        //runMazeAlgorithm
+        runMazeAlgorithm({
+            maze, 
+            grid,
+            startTile, 
+            endTile, 
+            setIsDisabled,
+            speed
+        });
+        const newGrid = grid.slice();
+        setGrid(newGrid)
+        setIsGraphVisualized(false);
+    };
+
+    const handleRunVisualizer = () => {
+        if(isGraphVisualized){
+            setIsGraphVisualized(false);
+            resetGrid({grid: grid.slice(), startTile, endTile});
+            return;
+        }
+
+        // run the algorithm
+        const {traversedTiles, path} =  runPathFindingAlgorithm({
+            algorithm,
+            grid,
+            startTile,
+            endTile,
+        });
+
+        animatePath(traversedTiles, path, startTile, endTile, speed);
+        setIsDisabled(true);
+        isVisulaizationRunningRef.current = true;
+        setTimeout(() => {
+            const newGrid = grid.slice();
+            setGrid(newGrid);
+            setIsGraphVisualized(true);
+            setIsDisabled(false);
+            isVisulaizationRunningRef.current = false;
+        }, (SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) + EXTENDED_SLEEP_TIME * (path.length + 60) * SPEEDS.find((s) => s.value === speed)!.value));
+    }
+    
+    return (
+        <div className="flex items-center justify-center min-h-[4.5rem] border-b shadow-gray-600 sm:px-5 px-0">
+            <div className="flex item-center lg:justify-between justify-center w-full sm:w-[52rem] ">
+               <h1 className="lg:flex hidden w-[40%] text-2xl pl-1">
+                  Pathfinding Visualizer
+                </h1> 
+                <div className="flex sm:items-end items-center justify-start sm:justify-between sm:flex-row flex-col sm:space-y-0 space-y-3 sm:py-0 py-4 sm:space-x-4">
+                    <Select
+                       label = "Maze"
+                       value = {maze}
+                       options={MAZES}
+                       onChange={(e) => {
+                        // handle generating maze
+                        handleGenerateMaze(e.target.value as MazeType);
+                    }}
+                    />
+                    <Select
+                       label ="Graph"
+                       value={algorithm}
+                       options={PathFINDING_ALGORITHMS}
+                       onChange={(e) => {
+                         setAlgorithm(e.target.value as AlgorithmType);
+                       }}
+                    />
+                    <Select
+                       label="Speed"
+                       value={speed}
+                       options={SPEEDS}
+                       onChange={(e) => {
+                          setSpeed( parseInt(e.target.value) as SpeedType)
+                       }}
+                    />
+                   <PlayButton
+                       isDisabled={isDisabled}
+                       isGraphVisualized={isGraphVisualized}
+                       handleRunVisualizer={handleRunVisualizer}
+                   />
+                    
+                </div>
+
+            </div>
+
+        </div>
+    )
+}
