@@ -1,20 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,532;1,532&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Merienda:wght@300..900&family=Michroma&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Prata&family=Space+Grotesk:wght@300..700&display=swap');
 @import "tailwindcss";
+
+
+@theme{
+  --font-outfit: "Michroma", sans-serif;
   
+}
+
 
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
   
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #090909;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #090909;
   
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
   @keyframes wall {
     0% {
@@ -24,6 +31,7 @@
       transform: scale(1);
     }
   }
+
 
 
   @keyframes traversed {
@@ -80,6 +88,5 @@
       animation: wall 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
- 
 
   
