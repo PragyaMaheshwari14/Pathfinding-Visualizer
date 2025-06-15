@@ -12,9 +12,9 @@ function App() {
     <PathfindingProvider> 
       <TileProvider>
         <SpeedProvider>
-        <div className='h-screen w-screen flex flex-col'>
+        <div className='h-screen w-screen flex flex-col overflow-x-hidden'>
           <Nav isVisulaizationRunningRef={isVisulaizationRunningRef}/>
-          <Grid isVisulaizationRunningRef={isVisulaizationRunningRef}/>
+          <Grid  isVisulaizationRunningRef={isVisulaizationRunningRef}/>
         </div>
         </SpeedProvider>
       </TileProvider>
