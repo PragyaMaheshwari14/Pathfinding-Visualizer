@@ -129,7 +129,7 @@ function StatRow({ rows }: { rows: [string, string, string, string, string, stri
   );
 }
 
-function Sidebar({ active, onNav, isOpen, onClose }: { active: string; onNav: (id: string) => void; isOpen?: boolean; onClose?: () => void }) {
+function Sidebar({ active, onNav, onClose }: { active: string; onNav: (id: string) => void; isOpen?: boolean; onClose?: () => void }) {
   return (
     <aside style={{
       width: 220,
