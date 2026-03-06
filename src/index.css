@@ -1,92 +1,123 @@
-@import url('https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,532;1,532&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Merienda:wght@300..900&family=Michroma&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Prata&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap');
 @import "tailwindcss";
 
-
-@theme{
-  --font-outfit: "Michroma", sans-serif;
-  
-}
-
-
+/* ── Notion Design Tokens ─────────────────────────────────────────────── */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f7f7f5;
+  --bg-tertiary:   #efeeeb;
+  --bg-hover:      #e9e9e6;
+  --border:        #e3e2de;
+  --border-strong: #ccc9c2;
+
+  --text-primary:   #1a1a1a;
+  --text-secondary: #5a5a5a;
+  --text-tertiary:  #9b9b9b;
+
+  --blue:       #2563eb;
+  --blue-dark:  #1d4ed8;
+  --blue-muted: #dbeafe;
+  --blue-text:  #1e40af;
+  --green:      #16a34a;
+  --red:        #dc2626;
+
+  --tile-border:    #e3e2de;
+  --tile-traversed: #93c5fd;
+  --tile-path:      #2563eb;
+  --tile-wall:      #3b3b3b;
+  --tile-start:     #16a34a;
+  --tile-end:       #dc2626;
+
+  --pill-shadow:     0 2px 20px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+  --card-shadow:     0 1px 4px rgba(0,0,0,0.06);
+  --dropdown-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+
+  font-family: "DM Sans", system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #090909;
-  
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-  @keyframes wall {
-    0% {
-      transform: scale(0.7);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
+/* ── Dark Mode ────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg-primary:    #191919;
+  --bg-secondary:  #212121;
+  --bg-tertiary:   #2a2a2a;
+  --bg-hover:      #2e2e2e;
+  --border:        #2e2e2e;
+  --border-strong: #3d3d3d;
 
+  --text-primary:   #e8e8e6;
+  --text-secondary: #9b9b9b;
+  --text-tertiary:  #555555;
 
+  --blue:       #60a5fa;
+  --blue-dark:  #93c5fd;
+  --blue-muted: #1e3a8a;
+  --blue-text:  #93c5fd;
+  --green:      #22c55e;
+  --red:        #f87171;
 
-  @keyframes traversed {
-    0% {
-      transform: scale(0.3);
-      background-color: #9333eabf;
-      border-radius: 100%;
-    }
-    50%{
-      background-color: #4f46e5bf;
-    }
-    75%{
-      transform: scale(1.2);
-      background-color: #3b82f6;
-    }
-    100%{
-      transform: scale(1);
-      background-color: #22d3ee;
-    }
-  }
+  --tile-border:    #2e2e2e;
+  --tile-traversed: #1d4ed8;
+  --tile-path:      #60a5fa;
+  --tile-wall:      #d4d3cf;
+  --tile-start:     #22c55e;
+  --tile-end:       #f87171;
 
-  @keyframes path {
-    0%{
-      transform: scale(0.3);
-      background-color: #e11d48bf;
-      border-radius: 100%;
-    }
-    50%{
-      background-color: #ea580cbf;
-    }
-    75%{
-      transform: scale(1.2);
-      background-color: #fb923cbf;
-    }
-    90%{
-      transform: scale(0.8);
-      background-color: #fde68a;
-    }
-    100%{
-      transform: scale(1);
-    }
-  }
+  --pill-shadow:     0 2px 20px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3);
+  --card-shadow:     0 1px 4px rgba(0,0,0,0.3);
+  --dropdown-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
 
-  @layer utilities {
-    .animate-traversed {
-      animation: traversed 0.5s cubic-bezier(0, 0, 0.2, 1);
-    }
-  
-    .animate-path {
-      animation: path 1.5s cubic-bezier(0, 0, 0.2, 1);
-    }
-  
-    .animate-wall {
-      animation: wall 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-  }
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+}
 
-  
+/* ── Tile Animations ──────────────────────────────────────────────────── */
+@keyframes wall {
+  0%   { transform: scale(0.6); opacity: 0.5; }
+  60%  { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes traversed {
+  0%   { transform: scale(0.2); background-color: #bfdbfe; border-radius: 50%; }
+  40%  { background-color: #60a5fa; border-radius: 30%; }
+  70%  { transform: scale(1.15); background-color: #3b82f6; }
+  100% { transform: scale(1); background-color: var(--tile-traversed); border-radius: 0; }
+}
+
+@keyframes path {
+  0%   { transform: scale(0.2); background-color: #dbeafe; border-radius: 50%; }
+  40%  { background-color: #93c5fd; border-radius: 30%; }
+  70%  { transform: scale(1.15); background-color: #3b82f6; }
+  100% { transform: scale(1); background-color: var(--tile-path); border-radius: 0; }
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@layer utilities {
+  .animate-traversed { animation: traversed 0.5s  cubic-bezier(0, 0, 0.2, 1)   forwards; }
+  .animate-path      { animation: path      1.2s  cubic-bezier(0, 0, 0.2, 1)   forwards; }
+  .animate-wall      { animation: wall      0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+  .animate-drop-in   { animation: dropIn    0.14s cubic-bezier(0.2, 0, 0, 1); }
+  .animate-fade-up   { animation: fadeUp    0.25s ease; }
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }

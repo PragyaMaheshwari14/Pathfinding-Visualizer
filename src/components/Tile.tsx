@@ -1,17 +1,12 @@
 import { twMerge } from "tailwind-merge";
-import { 
-    END_TILE_STYLE, 
+import {
     MAX_ROWS,
-    PATH_TILE_STYLE,
-    START_TILE_STYLE,
     TILE_STYLE,
-    TRAVERSED_TILE_STYLE,
-    WALL_TILE_STYLE
- } from "../utils/constants";
+} from "../utils/constants";
 
- interface MouseFunction {
+interface MouseFunction {
     (row: number, col: number): void;
- }
+}
 
 export function Tile({
     row,
@@ -23,8 +18,8 @@ export function Tile({
     isPath,
     handleMouseDown,
     handleMouseEnter,
-    handleMouseUp
-}:{
+    handleMouseUp,
+}: {
     row: number;
     col: number;
     isStart: boolean;
@@ -35,44 +30,28 @@ export function Tile({
     handleMouseDown: MouseFunction;
     handleMouseEnter: MouseFunction;
     handleMouseUp: MouseFunction;
-}){
+}) {
+    // CHANGED: colours now reference CSS variables defined in index.css so they
+    //          automatically flip between light and dark mode.
+    //          Previously each state had a hardcoded Tailwind colour class.
+    let colourClass = "bg-[var(--bg-primary)]";
+    if      (isStart)     colourClass = "bg-[var(--tile-start)]";
+    else if (isEnd)       colourClass = "bg-[var(--tile-end)]";
+    else if (isWall)      colourClass = "bg-[var(--tile-wall)]";
+    else if (isPath)      colourClass = "bg-[var(--tile-path)]";
+    else if (isTraversed) colourClass = "bg-[var(--tile-traversed)]";
 
-   let tileTyleStyle;
+    // Border additions for grid edges (unchanged logic)
+    const borderBottom = row === MAX_ROWS - 1 ? "border-b border-b-[var(--tile-border)]" : "";
+    const borderLeft   = col === 0            ? "border-l border-l-[var(--tile-border)]" : "";
 
-    if(isStart){
-        tileTyleStyle = START_TILE_STYLE;
-    } else if (isEnd) {
-        tileTyleStyle = END_TILE_STYLE;
-    } else if (isWall) {
-        tileTyleStyle = WALL_TILE_STYLE;
-    } else if (isPath) {
-        tileTyleStyle = PATH_TILE_STYLE;
-    } else if (isTraversed) {
-        tileTyleStyle = TRAVERSED_TILE_STYLE;
-    } else {
-        tileTyleStyle = TILE_STYLE;
-    }
-
-    const borderStyle = row === MAX_ROWS - 1 ? "border-b" : col === 0 ?"border-l":"";
-    const edgeStyle = row === MAX_ROWS - 1 && col === 0 ? 'border-l':"";
-    
     return (
-        // <div className={twMerge(tileTyleStyle, borderStyle, edgeStyle)} id={`${row}-${col}`}/>
         <div
-        className={twMerge(
-          tileTyleStyle,
-          borderStyle,
-          edgeStyle,
-          isStart && "bg-green-500",
-          isEnd && "bg-red-600",
-          isWall && "bg-gray-200"
-        )}
-        id={`${row}-${col}`}
-        onMouseDown={() => handleMouseDown(row, col)}
-        onMouseUp={() => handleMouseUp(row, col)}
-        onMouseEnter={() => handleMouseEnter(row, col)}
-      />
-    )
-
-
+            className={twMerge(TILE_STYLE, colourClass, borderBottom, borderLeft)}
+            id={`${row}-${col}`}
+            onMouseDown={() => handleMouseDown(row, col)}
+            onMouseUp={() => handleMouseUp(row, col)}
+            onMouseEnter={() => handleMouseEnter(row, col)}
+        />
+    );
 }
