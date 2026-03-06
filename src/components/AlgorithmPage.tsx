@@ -87,6 +87,10 @@ export function AlgorithmsPage() {
                     </div>
                 </div>
             ))}
+            <div style={{ marginTop: 48, paddingTop: 24, borderTop: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: "var(--text-tertiary)" }}>Built by Pragya</span>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: "var(--text-tertiary)" }}>Wayfind · 2025</span>
+            </div>
         </div>
     );
 }
