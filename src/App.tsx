@@ -4,6 +4,7 @@ import { Nav, PageId } from "./components/Nav";
 import { PathfindingProvider } from "./context/PathfindingContext";
 import { SpeedProvider } from "./context/SpeedContext";
 import { TileProvider } from "./context/TileContext";
+import { ReactLenis } from 'lenis/react'
 
 import { AlgorithmsPage } from "./components/AlgorithmPage";
 import { ComplexityPage } from "./components/ComplexityPage";
@@ -24,44 +25,47 @@ function App() {
   }, [isDark]);
 
   return (
-    <PathfindingProvider>
-      <TileProvider>
-        <SpeedProvider>
-          <div
-            style={{
-              minHeight: "100vh",
-              background: "var(--bg-primary)",
-              color: "var(--text-primary)",
-              transition: "background 0.2s ease, color 0.2s ease",
-              display: "flex",
-              flexDirection: "column",
-              overflowX: "hidden",
-            }}
-          >
-            <Nav
-              isVisulaizationRunningRef={isVisulaizationRunningRef}
-              activePage={activePage}
-              setActivePage={setActivePage}
-              isDark={isDark}
-              toggleTheme={() => setIsDark((p) => !p)}
-            />
-
+    <>
+    <ReactLenis root />
+      <PathfindingProvider>
+        <TileProvider>
+          <SpeedProvider>
             <div
-              key={activePage}
-              style={{ flex: 1, display: "flex", flexDirection: "column" }}
+              style={{
+                minHeight: "100vh",
+                background: "var(--bg-primary)",
+                color: "var(--text-primary)",
+                transition: "background 0.2s ease, color 0.2s ease",
+                display: "flex",
+                flexDirection: "column",
+                overflowX: "hidden",
+              }}
             >
-              {activePage === "visualizer" && (
-                <Grid isVisulaizationRunningRef={isVisulaizationRunningRef} />
-              )}
-              {activePage === "algorithms" && <AlgorithmsPage />}
-              {activePage === "complexity" && <ComplexityPage />}
-              {activePage === "about" && <AboutPage />}
-              {activePage === "docs" && <DocsPage />}
+              <Nav
+                isVisulaizationRunningRef={isVisulaizationRunningRef}
+                activePage={activePage}
+                setActivePage={setActivePage}
+                isDark={isDark}
+                toggleTheme={() => setIsDark((p) => !p)}
+              />
+
+              <div
+                key={activePage}
+                style={{ flex: 1, display: "flex", flexDirection: "column" }}
+              >
+                {activePage === "visualizer" && (
+                  <Grid isVisulaizationRunningRef={isVisulaizationRunningRef} />
+                )}
+                {activePage === "algorithms" && <AlgorithmsPage />}
+                {activePage === "complexity" && <ComplexityPage />}
+                {activePage === "about" && <AboutPage />}
+                {activePage === "docs" && <DocsPage />}
+              </div>
             </div>
-          </div>
-        </SpeedProvider>
-      </TileProvider>
-    </PathfindingProvider>
+          </SpeedProvider>
+        </TileProvider>
+      </PathfindingProvider>
+    </>
   );
 }
 
